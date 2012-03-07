@@ -144,16 +144,11 @@ def calculate(measurements, initial_xy):
   u = matrix([[0.], [0.], [0.], [0.]]) # external motion
 
   ### fill this in: ###
-  #P =  # initial uncertainty
-  P = matrix([[0.,0.,0.,0.],[0.,0.,0.,0.],[0.,0.,1000.,0.],[0.,0.,0.,1000.]])
-  #F =  # next state function
-  F = matrix([[1.,0.,dt,0.],[0.,1.,0.,dt],[0.,0.,1.,0.],[0.,0.,0.,1.]])
-  #H =  # measurement function
-  H = matrix([[1.,0.,0.,0.],[0.,1.,0.,0.]])
-  #R =  # measurement uncertainty
-  R = matrix([[0.1,0.],[0.,0.1]])
-  #I =  # identity matrix
-  I = matrix([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]])
+  P =  # initial uncertainty
+  F =  # next state function
+  H =  # measurement function
+  R =  # measurement uncertainty
+  I =  # identity matrix
 
   def filter(x, P):
     for n in range(len(measurements)):
@@ -172,5 +167,3 @@ def calculate(measurements, initial_xy):
     return x, P
     
   return filter(x, P)
-
-
