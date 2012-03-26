@@ -27,11 +27,11 @@ def showpath(path, fix, answer):
     x_answer.append(answer[0][0])
     y_answer.append(answer[0][1])
 
+    plt.figure()
     plt.plot(x_path, y_path, 'b-', x_fix, y_fix, 'ro', x_nofix, y_nofix, 'bo', x_answer, y_answer, 'k-')
     plt.axis([min(x_path + x_answer + x_fix) - 1, max(x_path + x_answer + x_fix) + 1, \
               min(y_path + y_answer + y_fix) - 1, max(y_path + y_answer + y_fix) + 1])
 
-    plt.show()
 
 #======================================================================
 
@@ -71,3 +71,4 @@ testfix2 = [1, 0, 1, 0, 1, 0, 1, 0]
 answer2 = task.smooth(testpath2, testfix2)
 showpath(testpath2, testfix2, answer2)
 
+plt.show()
