@@ -139,11 +139,20 @@ class robot:
 ############## ONLY ADD / MODIFY CODE BELOW THIS LINE ####################
    
     def cte(self, radius):
-        # 
-        #
-        # Add code here
-        #
-        #            
+        #On the left half-circle
+        if self.x < radius:
+            dst = sqrt((self.x - radius)**2 + (self.y - radius)**2)
+            cte = dst - radius
+        #On the right half-circle
+        elif self.x > 3 * radius:
+            dst = sqrt((self.x - 3 * radius)**2 + (self.y - radius)**2)
+            cte = dst - radius
+        #On the straight line going left
+        elif cos(self.orientation) > 0:
+            cte = self.y - 2 * radius
+        #On the straight line going rights
+        else:
+            cte = -self.y
 
         return cte
     

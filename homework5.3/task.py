@@ -60,8 +60,48 @@ def smooth(path, fix, weight_data = 0.0, weight_smooth = 0.1, tolerance = 0.0000
     # Enter code here. 
     # The weight for each of the two new equations should be 0.5 * weight_smooth
     #
+    # deep copy
+    newpath = [[0 for row in range(len(path[0]))] for col in range(len(path))]
+    for i in range(len(path)):
+        for j in range(len(path[0])):
+            newpath[i][j] = path[i][j]
 
+    keep_smoothing = True
+    prev_error = 10**9
 
+    while keep_smoothing:
+        error = 0.0
+        for ii in range(len(path)):
+            if fix[ii]:
+                continue
+
+            for dd in range(len(path[ii])):
+                e1 = weight_data * (path[ii][dd] - newpath[ii][dd])
+                newpath[ii][dd] += e1
+
+                e2 = weight_smooth * (newpath[(ii+1)%len(path)][dd] \
+                                    + newpath[(ii-1)%len(path)][dd] \
+                                    - 2 * newpath[ii][dd])
+                newpath[ii][dd] += e2
+
+                e3 = (weight_smooth*0.5) * (2 * newpath[(ii-1)%len(path)][dd] \
+                                              - newpath[(ii-2)%len(path)][dd] \
+                                              - newpath[ii][dd])
+                newpath[ii][dd] += e3
+
+                e4 = (weight_smooth*0.5) * (2 * newpath[(ii+1)%len(path)][dd] \
+                                              - newpath[(ii+2)%len(path)][dd] \
+                                              - newpath[ii][dd])
+                newpath[ii][dd] += e4
+
+                error += abs(e1 + e2 + e3 + e4)
+
+        if (prev_error - error) < tolerance:
+            keep_smoothing = False
+        else:
+            prev_error = error
+
+    return newpath # Leave this line for the grader!
 
 #thank you - EnTerr - for posting this on our discussion forum
 

@@ -68,6 +68,28 @@ def smooth(path, weight_data = 0.1, weight_smooth = 0.1, tolerance = 0.00001):
         for j in range(len(path[0])):
             newpath[i][j] = path[i][j]
 
+    keep_smoothing = True
+    prev_error = 10**9
+
+    while keep_smoothing:
+        error = 0.0
+        for ii in range(len(path)):
+            for dd in range(len(path[ii])):
+                e1 = weight_data * (path[ii][dd] - newpath[ii][dd])
+                newpath[ii][dd] += e1 
+
+                e2 = weight_smooth * (newpath[(ii+1)%len(path)][dd] + newpath[(ii-1)%len(path)][dd] - 2 * newpath[ii][dd])
+                newpath[ii][dd] += e2 
+
+                error += abs(e1 + e2)
+
+        if (prev_error - error) < tolerance:
+            keep_smoothing = False
+        else:
+            prev_error = error
+
+    return newpath # Leave this line for the grader!
+
 
 # thank you - EnTerr - for posting this on our discussion forum
 
